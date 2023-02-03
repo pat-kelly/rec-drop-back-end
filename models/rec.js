@@ -2,7 +2,20 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
+const commentSchema = new Schema({
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'Profile'
+  },
+  content: String
+})
 
+const likeSchema = new Schema({
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'Profile'
+  }
+})
 
 const recommendationSchema = new Schema({
   owner: {
@@ -32,5 +45,8 @@ const recommendationSchema = new Schema({
   photo: {
     type: String
   },
-  
+  likes: [likeSchema],
+  comments: [commentSchema]  
 })
+
+const Recommendation = mongoose.model('Recommendation', recommendationSchema)
