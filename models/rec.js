@@ -50,3 +50,5 @@ const recommendationSchema = new Schema({
 })
 
 const Recommendation = mongoose.model('Recommendation', recommendationSchema)
+
+export {Recommendation}
