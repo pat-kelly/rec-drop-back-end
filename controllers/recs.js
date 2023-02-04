@@ -30,7 +30,7 @@ const create = async(req, res) =>{
 const show = async(req, res) =>{
   try {
     const rec = await Recommendation.findById(req.params.id)
-      .populate('likes comments')
+      .populate('likes comments owner')
     res.status(200).json(rec);
   } catch (err) {
     console.error(err);
@@ -44,7 +44,7 @@ const update = async(req, res) =>{
       req.params.id,
       req.body,
       { new: true })
-      .populate('likes comments')
+      .populate('likes comments owner')
     res.status(201).json(rec);
   } catch (err) {
     console.error(err);
