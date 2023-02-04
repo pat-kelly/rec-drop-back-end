@@ -14,6 +14,7 @@ router.get('/:id', checkAuth, recsCtrl.show);
 router.put('/:id', checkAuth, recsCtrl.update);
 router.delete('/:id', checkAuth, recsCtrl.delete);
 router.post('/:id/comments', checkAuth, recsCtrl.createComment);
+router.delete('/:rid/comments/:cid', checkAuth, recsCtrl.delComment);
 
 
 export { router }
