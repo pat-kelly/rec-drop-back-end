@@ -98,6 +98,15 @@ const delComment = async(req, res) =>{
   }
 }
 
+const createLike = async(req, res) =>{
+  try {
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+}
+
 export {
   index,
   create,
@@ -106,4 +115,5 @@ export {
   delRec as delete,
   createComment,
   delComment,
+  createLike,
 }
