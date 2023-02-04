@@ -98,6 +98,36 @@ const delComment = async(req, res) =>{
   }
 }
 
+const like = async(req, res) =>{
+  try {
+    //find rec
+    //search through likes for profile ID
+      //if there > remove
+      //else add
+    const rec = await Recommendation.findById(req.params.id)
+      // .populate('likes')
+    if(rec.likes.length){
+      console.log('prof: ', req.user.profile);
+      const likeIdx = rec.likes.findIndex(like => like.owner.equals(req.user.profile));
+      console.log('likeIdx', likeIdx)
+      if(likeIdx < 0){
+        console.log('no user likes');
+        rec.likes.push({owner: req.user.profile})
+      }else{
+        console.log('found user likes');
+        rec.likes.remove({owner: req.user.profile})
+      }
+    }else{
+      rec.likes.push({owner: req.user.profile})
+    }
+    const newRec = await rec.save();
+    res.status(201).json(newRec);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+}
+
 export {
   index,
   create,
@@ -106,4 +136,5 @@ export {
   delRec as delete,
   createComment,
   delComment,
+  like,
 }

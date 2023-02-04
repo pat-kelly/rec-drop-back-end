@@ -13,8 +13,13 @@ router.post('/', checkAuth, recsCtrl.create);
 router.get('/:id', checkAuth, recsCtrl.show);
 router.put('/:id', checkAuth, recsCtrl.update);
 router.delete('/:id', checkAuth, recsCtrl.delete);
+
+//Comments section
 router.post('/:id/comments', checkAuth, recsCtrl.createComment);
 router.delete('/:rid/comments/:cid', checkAuth, recsCtrl.delComment);
+
+//Likes section
+router.put('/:id/like', checkAuth, recsCtrl.like);
 
 
 export { router }
