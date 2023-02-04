@@ -28,7 +28,20 @@ const create = async(req, res) =>{
   }
 }
 
+const show = async(req, res) =>{
+  try {
+    const rec = await Recommendation.findById(req.params.id)
+      .populate('likes')
+      .populate('comments')
+    res.status(200).json(rec);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+}
+
 export {
   index,
   create,
+  show,
 }

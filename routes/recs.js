@@ -10,5 +10,6 @@ router.get('/', recsCtrl.index);
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken);
 router.post('/', checkAuth, recsCtrl.create);
+router.get('/:id', checkAuth, recsCtrl.show);
 
 export { router }
