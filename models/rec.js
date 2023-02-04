@@ -8,7 +8,8 @@ const commentSchema = new Schema({
     ref: 'Profile'
   },
   content: String
-})
+},
+{ timestamps: true })
 
 const likeSchema = new Schema({
   owner: {
@@ -32,6 +33,9 @@ const recommendationSchema = new Schema({
     type: String,
     required: true
   },
+  description: {
+    type: String,
+  },
   creator: {
     type: String,
   },
@@ -51,7 +55,8 @@ const recommendationSchema = new Schema({
   },
   likes: [likeSchema],
   comments: [commentSchema]  
-})
+},
+{ timestamps: true })
 
 const Recommendation = mongoose.model('Recommendation', recommendationSchema)
 
