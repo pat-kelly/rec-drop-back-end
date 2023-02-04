@@ -4,8 +4,7 @@ import { Recommendation } from "../models/rec.js";
 const index = async(req, res) =>{
   try {
     const recs = await Recommendation.find({})
-      .populate('likes')
-      .populate('comments')
+      .populate('likes comments')
     res.status(200).json(recs);
     
 
@@ -31,8 +30,7 @@ const create = async(req, res) =>{
 const show = async(req, res) =>{
   try {
     const rec = await Recommendation.findById(req.params.id)
-      .populate('likes')
-      .populate('comments')
+      .populate('likes comments')
     res.status(200).json(rec);
   } catch (err) {
     console.error(err);
@@ -42,12 +40,11 @@ const show = async(req, res) =>{
 
 const update = async(req, res) =>{
   try {
-    const rec = Recommendation.findByIdAndUpdate(
+    const rec = await Recommendation.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true })
-      .populate('likes')
-      .populate('comments')
+      .populate('likes comments')
     res.status(201).json(rec);
   } catch (err) {
     console.error(err);
