@@ -30,7 +30,7 @@ const create = async(req, res) =>{
 const show = async(req, res) =>{
   try {
     const rec = await Recommendation.findById(req.params.id)
-      .populate('likes comments')
+      .populate('likes comments owner')
     res.status(200).json(rec);
   } catch (err) {
     console.error(err);
@@ -44,7 +44,7 @@ const update = async(req, res) =>{
       req.params.id,
       req.body,
       { new: true })
-      .populate('likes comments')
+      .populate('likes comments owner')
     res.status(201).json(rec);
   } catch (err) {
     console.error(err);
@@ -89,13 +89,9 @@ const delComment = async(req, res) =>{
   try {
     //Find rec > find comment > splice comment out.
     const rec = await Recommendation.findById(req.params.rid)
-      .populate('comments')
-    console.log('cid: ', req.params.cid);
-    const cIdx = rec.comments.findIndex( comment =>{
-      console.log('comment id: ', comment._id)
-      comment.equals(req.params.cid)
-    })
-    res.status(200).json(`Comment IDX: ${cIdx}`)
+    rec.comments.remove({ _id: req.params.cid })
+    const newRec = await rec.save()
+    res.status(200).json(newRec)
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
