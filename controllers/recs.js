@@ -52,9 +52,27 @@ const update = async(req, res) =>{
   }
 }
 
+const delRec = async(req, res) =>{
+  try {
+    const rec = await Recommendation.findById(req.params.id)
+    if( rec.owner.equals(req.user.profile)){
+      rec.show = false;
+      await rec.save()
+      res.status(200).json(rec)
+    }
+    else{
+      throw new Error('Not Authorized');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+}
+
 export {
   index,
   create,
   show,
   update,
+  delRec as delete,
 }
