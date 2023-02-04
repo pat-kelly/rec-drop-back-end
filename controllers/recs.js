@@ -4,7 +4,7 @@ import { Recommendation } from "../models/rec.js";
 const index = async(req, res) =>{
   try {
     const recs = await Recommendation.find({})
-      .populate('likes comments')
+      .populate('likes comments owner')
     res.status(200).json(recs);
     
 
@@ -87,7 +87,15 @@ const delComment = async(req, res) =>{
   //req.params.cid = comment id
   //req.params.rid = rec id
   try {
-    
+    //Find rec > find comment > splice comment out.
+    const rec = await Recommendation.findById(req.params.rid)
+      .populate('comments')
+    console.log('cid: ', req.params.cid);
+    const cIdx = rec.comments.findIndex( comment =>{
+      console.log('comment id: ', comment._id)
+      comment.equals(req.params.cid)
+    })
+    res.status(200).json(`Comment IDX: ${cIdx}`)
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
