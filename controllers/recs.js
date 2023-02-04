@@ -89,4 +89,5 @@ export {
   show,
   update,
   delRec as delete,
+  createComment,
 }
