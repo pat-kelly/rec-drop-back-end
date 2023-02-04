@@ -11,5 +11,6 @@ router.get('/', recsCtrl.index);
 router.use(decodeUserFromToken);
 router.post('/', checkAuth, recsCtrl.create);
 router.get('/:id', checkAuth, recsCtrl.show);
+router.put('/:id', checkAuth, recsCtrl.update);
 
 export { router }

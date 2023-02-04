@@ -40,8 +40,24 @@ const show = async(req, res) =>{
   }
 }
 
+const update = async(req, res) =>{
+  try {
+    const rec = Recommendation.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true })
+      .populate('likes')
+      .populate('comments')
+    res.status(201).json(rec);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);    
+  }
+}
+
 export {
   index,
   create,
   show,
+  update,
 }
