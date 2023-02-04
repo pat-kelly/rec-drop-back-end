@@ -45,6 +45,10 @@ const recommendationSchema = new Schema({
   photo: {
     type: String
   },
+  show: {
+    type: Boolean,
+    default: true
+  },
   likes: [likeSchema],
   comments: [commentSchema]  
 })
