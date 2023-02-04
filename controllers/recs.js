@@ -69,10 +69,25 @@ const delRec = async(req, res) =>{
   }
 }
 
+const createComment = async(req, res) =>{
+  try {
+    req.body.owner = req.user.profile;
+    const rec = await Recommendation.findById(req.params.id)
+      .populate('comments')
+    rec.comments.push(req.body);
+    const savedRec = await rec.save()
+    res.status(201).json(savedRec);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+}
+
 export {
   index,
   create,
   show,
   update,
   delRec as delete,
+  createComment,
 }

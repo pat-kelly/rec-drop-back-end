@@ -13,6 +13,7 @@ router.post('/', checkAuth, recsCtrl.create);
 router.get('/:id', checkAuth, recsCtrl.show);
 router.put('/:id', checkAuth, recsCtrl.update);
 router.delete('/:id', checkAuth, recsCtrl.delete);
+router.post('/:id/comments', checkAuth, recsCtrl.createComment);
 
 
 export { router }
