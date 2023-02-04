@@ -83,6 +83,17 @@ const createComment = async(req, res) =>{
   }
 }
 
+const delComment = async(req, res) =>{
+  //req.params.cid = comment id
+  //req.params.rid = rec id
+  try {
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+}
+
 export {
   index,
   create,
@@ -90,4 +101,5 @@ export {
   update,
   delRec as delete,
   createComment,
+  delComment,
 }
