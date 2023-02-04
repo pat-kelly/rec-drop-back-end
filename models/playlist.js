@@ -16,7 +16,8 @@ const playlistSchema = new Schema({
     ref: 'Recommendation'
   }],
   public: Boolean
-})
+},
+{ timestamps: true })
 
 const Playlist = mongoose.model('Playlist', playlistSchema);
 
