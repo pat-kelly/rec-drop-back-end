@@ -22,7 +22,7 @@ router.delete('/:rid/comments/:cid', checkAuth, recsCtrl.delComment);
 router.put('/:id/like', checkAuth, recsCtrl.like);
 
 //photos
-router.put('/:id/photo', checkAuth, recsCtrl.addPhoto);
+router.put('/:id/add-photo', checkAuth, recsCtrl.addPhoto);
 
 
 export { router }
