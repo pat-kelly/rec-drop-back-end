@@ -7,8 +7,6 @@ const index = async(req, res) =>{
     const recs = await Recommendation.find({})
       .populate('likes comments owner')
     res.status(200).json(recs);
-    
-
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
@@ -74,7 +72,7 @@ const addPhoto = async(req, res) =>{
 try {
   const imageFile = req.files.photo.path;
   const rec = await Recommendation.findById(req.params.id)
-  const image = cloudinary.uploader.upload(imageFile, {tags: 'rec photo'});
+  const image = await cloudinary.uploader.upload(imageFile, {tags: 'rec photo'});
   rec.photo = image.url;
   await rec.save();
   res.status(201).json(rec)
