@@ -21,5 +21,8 @@ router.delete('/:rid/comments/:cid', checkAuth, recsCtrl.delComment);
 //Likes section
 router.put('/:id/like', checkAuth, recsCtrl.like);
 
+//photos
+router.put('/:id/add-photo', checkAuth, recsCtrl.addPhoto);
+
 
 export { router }

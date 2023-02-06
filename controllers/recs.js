@@ -1,5 +1,6 @@
 import { Profile } from "../models/profile.js";
 import { Recommendation } from "../models/rec.js";
+import { v2 as cloudinary } from 'cloudinary';
 
 const index = async(req, res) =>{
   try {
@@ -69,6 +70,20 @@ const delRec = async(req, res) =>{
   }
 }
 
+const addPhoto = async(req, res) =>{
+try {
+  const imageFile = req.files.photo.path;
+  const rec = await Recommendation.findById(req.params.id)
+  const image = cloudinary.uploader.upload(imageFile, {tags: 'rec photo'});
+  rec.photo = image.url;
+  await rec.save();
+  res.status(201).json(rec)
+  } catch (err) {
+      console.error(err);
+      res.status(500).json(err);
+  }
+}
+
 const createComment = async(req, res) =>{
   try {
     req.body.owner = req.user.profile;
@@ -134,6 +149,7 @@ export {
   show,
   update,
   delRec as delete,
+  addPhoto,
   createComment,
   delComment,
   like,
