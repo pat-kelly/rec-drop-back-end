@@ -15,8 +15,10 @@ const create = async(req, res) =>{
 const index = async(req, res) =>{
   try {
     const playlists = await Playlist.find({owner: req.user.profile})
-    .populate('recs')
-    .populate('recs.owner')
+    .populate({
+      path: 'recs',
+      populate: { path: 'owner'}
+    });
     res.status(200).json(playlists);
   } catch (err) {
     console.error(err);
@@ -24,7 +26,23 @@ const index = async(req, res) =>{
   }
 }
 
+const update = async(req, res) =>{
+  try {
+    const pList = await Playlist.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    ).populate('recs')
+    res.status(201).json(pList);
+  } catch (err) {
+    console.error(err);
+    res.status(500);
+  }
+}
+
+
 export{
   create,
   index,
+  update,
 }
