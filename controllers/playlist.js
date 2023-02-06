@@ -50,9 +50,20 @@ const show = async(req, res) =>{
   }
 }
 
+const delList = async(req, res) =>{
+  try {
+    const pList = await Playlist.findByIdAndDelete(req.params.id)
+    res.status(201).json(pList);
+  } catch (err) {
+    console.error(err);
+    res.status(500);
+  }
+}
+
 export{
   create,
   index,
   update,
   show,
+  delList as delete
 }
