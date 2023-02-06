@@ -12,6 +12,19 @@ const create = async(req, res) =>{
   }
 }
 
+const index = async(req, res) =>{
+  try {
+    const playlists = await Playlist.find({owner: req.user.profile})
+    .populate('recs')
+    .populate('recs.owner')
+    res.status(200).json(playlists);
+  } catch (err) {
+    console.error(err);
+    res.status(500);
+  }
+}
+
 export{
   create,
+  index,
 }
