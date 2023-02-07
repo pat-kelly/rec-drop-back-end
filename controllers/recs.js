@@ -6,6 +6,7 @@ const index = async(req, res) =>{
   try {
     const recs = await Recommendation.find({})
       .populate('likes comments owner')
+      .sort({ createdAt: 'desc' })
     res.status(200).json(recs);
   } catch (err) {
     console.error(err);
