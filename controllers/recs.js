@@ -1,5 +1,3 @@
-//recs.js controller
-
 import { Profile } from "../models/profile.js";
 import { Recommendation } from "../models/rec.js";
 import { v2 as cloudinary } from 'cloudinary';
@@ -20,9 +18,7 @@ const create = async(req, res) =>{
   try {
     req.body.owner = req.user.profile;
     const rec = await Recommendation.create(req.body);
-
     res.status(201).json(rec);
-
   } catch (err) {
     console.error(err);
     res.status(500).json(err);    
@@ -102,10 +98,7 @@ const createComment = async(req, res) =>{
 }
 
 const delComment = async(req, res) =>{
-  //req.params.cid = comment id
-  //req.params.rid = rec id
   try {
-    //Find rec > find comment > splice comment out.
     const rec = await Recommendation.findById(req.params.rid)
     rec.comments.remove({ _id: req.params.cid })
     const newRec = await rec.save()
@@ -118,21 +111,13 @@ const delComment = async(req, res) =>{
 
 const like = async(req, res) =>{
   try {
-    //find rec
-    //search through likes for profile ID
-      //if there > remove
-      //else add
     const rec = await Recommendation.findById(req.params.id)
       .populate('owner')
     if(rec.likes.length){
-      console.log('prof: ', req.user.profile);
       const likeIdx = rec.likes.findIndex(like => like.owner.equals(req.user.profile));
-      console.log('likeIdx', likeIdx)
       if(likeIdx < 0){
-        console.log('no user likes');
         rec.likes.push({owner: req.user.profile})
       }else{
-        console.log('found user likes');
         rec.likes.remove({owner: req.user.profile})
       }
     }else{
