@@ -1,3 +1,5 @@
+//recs.js controller
+
 import { Profile } from "../models/profile.js";
 import { Recommendation } from "../models/rec.js";
 import { v2 as cloudinary } from 'cloudinary';
@@ -87,10 +89,12 @@ const createComment = async(req, res) =>{
   try {
     req.body.owner = req.user.profile;
     const rec = await Recommendation.findById(req.params.id)
-      .populate('comments')
     rec.comments.push(req.body);
-    const savedRec = await rec.save()
-    res.status(201).json(savedRec);
+    await rec.save()
+    const profile = await Profile.findById(req.user.profile);
+    const newComment = rec.comments[rec.comments.length -1]
+    newComment.owner = profile
+    res.status(201).json(newComment);
   } catch (err) {
     console.error(err);
     res.status(500).json(err);

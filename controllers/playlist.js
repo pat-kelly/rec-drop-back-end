@@ -28,7 +28,7 @@ const update = async(req, res) =>{
       req.params.id,
       req.body,
       { new: true }
-    ).populate('recs')
+    )
     res.status(201).json(pList);
   } catch (err) {
     console.error(err);
