@@ -123,7 +123,7 @@ const like = async(req, res) =>{
       //if there > remove
       //else add
     const rec = await Recommendation.findById(req.params.id)
-      // .populate('likes')
+      .populate('owner')
     if(rec.likes.length){
       console.log('prof: ', req.user.profile);
       const likeIdx = rec.likes.findIndex(like => like.owner.equals(req.user.profile));
