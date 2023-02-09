@@ -9,11 +9,11 @@ const router = Router();
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken);
-router.post('/create', playlistCtrl.create);
-router.get('/', playlistCtrl.index);
-router.put('/:id', playlistCtrl.update);
-router.get('/:id', playlistCtrl.show);
-router.delete('/:id', playlistCtrl.delete);
+router.post('/create', checkAuth, playlistCtrl.create);
+router.get('/', checkAuth, playlistCtrl.index);
+router.put('/:id', checkAuth, playlistCtrl.update);
+router.get('/:id', checkAuth, playlistCtrl.show);
+router.delete('/:id', checkAuth, playlistCtrl.delete);
 
 
 
